@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTQ.PRO KITCHEN | Authentic Cuisine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS Variables */
+        :root {
+            --slide-transition-duration: 0.3s;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0);
+            padding: 20px 20px 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        nav a:hover::before {
+            transform: scale(1);
+        }
+
+        nav a::after {
+            display: none;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Video Section */
+        .video-section {
+            position: relative;
+            width: 100vw;
+            height: 70vh;
+            margin-top: 15vh;
+            perspective: 1000px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        /* Video Info at Bottom */
+        .video-info {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            color: white;
+            width: 90%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            padding: 25px 40px;
+            border-radius: 15px;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .video-info h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .video-info p {
+            font-size: 1.1rem;
+            font-weight: 400;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            opacity: 0.9;
+        }
+
+        /* Social Media Icons */
+        .social-icons {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .social-icon.whatsapp:hover {
+            background: rgba(37, 211, 102, 0.3);
+        }
+
+        .social-icon.facebook:hover {
+            background: rgba(59, 89, 152, 0.3);
+        }
+
+        /* Gradient Overlay */
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.4) 0%,
+                    transparent 30%,
+                    transparent 60%,
+                    rgba(0, 0, 0, 0.6) 100%);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* Pop-up Overlay Sections */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay.active {
+            display: flex;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .overlay-content {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(30px);
+            padding: 60px;
+            border-radius: 25px;
+            max-width: 780px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .overlay-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+            border-radius: 25px 25px 0 0;
+            pointer-events: none;
+        }
+
+        .overlay-content::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
+            border-radius: 0 0 25px 25px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay-content.has-scroll::after {
+            opacity: 1;
+        }
+
+        @keyframes scaleIn {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .overlay-content h2 {
+            color: #fff;
+            font-size: 2.8rem;
+            margin-bottom: 35px;
+            font-weight: 400;
+            position: relative;
+            padding-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .overlay-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, transparent 100%);
+            border-radius: 2px;
+        }
+
+        .overlay-content p,
+        .overlay-content label {
+            color: #e8e8e8;
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 22px;
+            font-weight: 400;
+        }
+
+        .overlay-content p {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .overlay-content p::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
+
+        .overlay-content strong {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .overlay-content a {
+            color: #fff;
+            text-decoration: underline;
+            text-decoration-color: rgba(255, 255, 255, 0.4);
+            text-underline-offset: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .overlay-content a:hover {
+            color: #fff;
+            text-decoration-color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        .overlay-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .overlay-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .overlay-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.3s ease;
+        }
+
+        .overlay-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.25) 100%);
+            background-clip: padding-box;
+        }
+
+        /* Firefox Custom Scrollbar */
+        .overlay-content {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.02);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg) scale(1.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Testimonial Cards */
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+            padding: 35px;
+            border-radius: 18px;
+            margin-bottom: 30px;
+            border-left: 4px solid rgba(255, 255, 255, 0.6);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.05);
+            font-family: Georgia, serif;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.1) 100%);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            border-left-color: #fff;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 18px;
+            color: #f0f0f0;
+            position: relative;
+            z-index: 1;
+            font-size: 1.05rem;
+            font-weight: 400;
+        }
+
+        .testimonial-card p::before {
+            display: none;
+        }
+
+        .testimonial-card .author {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+            font-style: normal;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .testimonial-card .author::before {
+            content: '— ';
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            margin-top: 30px;
+        }
+
+        .contact-form label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .contact-form label::before {
+            display: none;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .contact-form textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            color: #000;
+            border: none;
+            padding: 16px 45px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(255, 255, 255, 0.25);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Overlay Images */
+        .overlay-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 12px;
+            margin: 30px auto 20px;
+            display: block;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay-image:hover {
+            opacity: 1;
+        }
+
+        /* Contact Address */
+        .contact-address {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-address h3 {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-address p {
+            color: #e8e8e8;
+            line-height: 1.8;
+        }
+
+        .contact-address a {
+            color: #fff;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-address a:hover {
+            opacity: 0.7;
+        }
+
+        /* Map Container */
+        .map-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto 20px;
+        }
+
+        .overlay-map {
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay-map:hover {
+            opacity: 1 !important;
+        }
+
+        /* Menu Grid Styles */
+        .menu-section {
+            padding: 80px 40px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .menu-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: white;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .menu-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .menu-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover .menu-image {
+            transform: scale(1.05);
+        }
+
+        .menu-details {
+            padding: 25px;
+        }
+
+        .menu-item-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .menu-item-price {
+            font-size: 1.2rem;
+            color: #e8e8e8;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .menu-item-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            padding: 60px 30px 25px;
+            z-index: 50;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.9);
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            gap: 40px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .footer-section strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            header {
+                padding: 20px 30px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                gap: 25px;
+            }
+
+            nav a {
+                font-size: 0.95rem;
+            }
+
+            .video-info h2 {
+                font-size: 1.6rem;
+            }
+
+            .video-info p {
+                font-size: 1rem;
+            }
+
+            .overlay-content {
+                padding: 40px 30px;
+            }
+
+            .overlay-content h2 {
+                font-size: 2.2rem;
+            }
+
+            .testimonial-card {
+                padding: 28px;
+            }
+
+            .contact-form input,
+            .contact-form textarea {
+                padding: 14px 18px;
+            }
+
+            .menu-section {
+                padding: 60px 30px;
+            }
+
+            .menu-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                flex-direction: column;
+                gap: 0;
+                padding: 20px 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                pointer-events: none;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            nav a {
+                padding: 18px 30px;
+                width: 100%;
+                text-align: center;
+                font-size: 1.1rem;
+                border-radius: 0;
+                transition: all 0.3s ease;
+            }
+
+            nav a:hover,
+            nav a:active {
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            nav a::before {
+                border-radius: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .video-section {
+                height: 60vh;
+                margin-top: 20vh;
+            }
+
+            .video-info {
+                bottom: 70px;
+                padding: 20px 25px;
+            }
+
+            .video-info h2 {
+                font-size: 1.4rem;
+                margin-bottom: 8px;
+            }
+
+            .video-info p {
+                font-size: 0.95rem;
+            }
+
+            .social-icons {
+                bottom: 120px;
+                gap: 15px;
+            }
+
+            .social-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .overlay-content {
+                padding: 40px 25px;
+                width: 95%;
+                border-radius: 20px;
+            }
+
+            .overlay-content h2 {
+                font-size: 2rem;
+                margin-bottom: 25px;
+            }
+
+            .overlay-content p {
+                font-size: 1rem;
+            }
+
+            .testimonial-card {
+                padding: 25px;
+                margin-bottom: 25px;
+            }
+
+            .testimonial-card::before {
+                font-size: 80px;
+            }
+
+            .contact-form input,
+            .contact-form textarea {
+                padding: 14px 16px;
+                margin-bottom: 20px;
+            }
+
+            .submit-btn {
+                padding: 14px 35px;
+                font-size: 1rem;
+            }
+
+            .menu-section {
+                padding: 50px 20px;
+            }
+
+            .menu-title {
+                font-size: 2rem;
+                margin-bottom: 40px;
+            }
+
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            footer {
+                padding: 40px 20px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .copyright {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.1rem;
+                letter-spacing: 1px;
+            }
+
+            .video-section {
+                height: 50vh;
+                margin-top: 25vh;
+            }
+
+            .video-info {
+                bottom: 60px;
+                padding: 15px 20px;
+            }
+
+            .video-info h2 {
+                font-size: 1.2rem;
+            }
+
+            .video-info p {
+                font-size: 0.85rem;
+            }
+
+            .social-icons {
+                bottom: 130px;
+                gap: 12px;
+            }
+
+            .social-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .overlay-image {
+                margin: 20px auto 15px;
+                border-radius: 8px;
+            }
+
+            .contact-address {
+                margin-top: 30px;
+                padding: 20px;
+            }
+
+            .contact-address h3 {
+                font-size: 1.2rem;
+            }
+
+            .map-container {
+                margin: 20px auto 15px;
+            }
+
+            .overlay-map {
+                height: 250px;
+            }
+
+            .overlay-content {
+                padding: 30px 20px;
+            }
+
+            .overlay-content h2 {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+            }
+
+            .overlay-content p {
+                font-size: 0.95rem;
+                padding-left: 15px;
+            }
+
+            .testimonial-card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .testimonial-card::before {
+                font-size: 60px;
+                left: 10px;
+            }
+
+            .contact-form label {
+                font-size: 0.8rem;
+            }
+
+            .contact-form input,
+            .contact-form textarea {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+
+            .submit-btn {
+                padding: 13px 30px;
+                font-size: 0.95rem;
+            }
+
+            .menu-section {
+                padding: 40px 15px;
+            }
+
+            .menu-title {
+                font-size: 1.7rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .menu-details {
+                padding: 20px;
+            }
+
+            .menu-item-title {
+                font-size: 1.2rem;
+            }
+
+            .menu-item-price {
+                font-size: 1.1rem;
+            }
+
+            footer {
+                padding: 30px 15px 15px;
+            }
+
+            .footer-section h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">TTQ.PRO KITCHEN</div>
+        <nav id="mainNav">
+            <a onclick="openOverlay('about')">About</a>
+            <a onclick="openOverlay('testimonials')">Testimonials</a>
+            <a onclick="openOverlay('contact')">Contact</a>
+            <a href="https://wa.me/27783578181?text=Hello%20I%20would%20like%20to%20order" target="_blank" rel="noopener noreferrer">Order Now</a>
+        </nav>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Video Section -->
+    <div class="video-section">
+        <div class="video-container">
+            <video autoplay muted loop class="video-bg">
+                <source src="1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video Info -
+            <div class="video-info">
+                <h2>TTQ.PRO KITCHEN</h2>
+                <p>Authentic Cuisine Crafted with Passion</p>
+            </div>
+
+            <!-- Social Media Icons 
+            <div class="social-icons">
+                <a href="https://wa.me/27783578181" target="_blank" class="social-icon whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.facebook.com/share/17dLnNTVjH/" target="_blank" class="social-icon facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- Menu Section -->
+    <section class="menu-section">
+        <h2 class="menu-title">OUR SPECIALTIES</h2>
+        <div class="menu-grid" id="menuGrid">
+            <!-- Menu items will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- About Overlay -->
+    <div class="overlay" id="aboutOverlay">
+        <div class="overlay-content">
+            <button class="close-btn" onclick="closeOverlay('about')">×</button>
+            <h2>About TTQ.PRO KITCHEN</h2>
+            <p>Welcome to TTQ.PRO KITCHEN, where traditional recipes meet modern culinary excellence. Our passion for authentic flavors and dedication to quality ingredients has made us a beloved destination for food enthusiasts.</p>
+            <p>Founded with the vision of bringing authentic cuisine to our community, we take pride in every dish we serve. Our chefs combine time-honored techniques with innovative approaches to create unforgettable dining experiences.</p>
+            <p>At TTQ.PRO KITCHEN, we believe that great food brings people together. Whether you're dining in with family or taking away for a cozy night at home, we ensure every meal is prepared with care and attention to detail.</p>
+            <p>We source our ingredients from trusted local suppliers, supporting our community while guaranteeing freshness in every bite. Our menu features a variety of traditional dishes, each with its own story and unique flavor profile.</p>
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Restaurant interior" class="overlay-image">
+        </div>
+    </div>
+
+    <!-- Testimonials Overlay
+    <div class="overlay" id="testimonialsOverlay">
+        <div class="overlay-content">
+            <button class="close-btn" onclick="closeOverlay('testimonials')">×</button>
+            <h2>Customer Testimonials</h2>
+            
+            <div class="testimonial-card">
+                <p>"The ox-liver at TTQ.PRO KITCHEN is absolutely incredible! Tender, flavorful, and cooked to perfection. This has become my go-to spot for authentic cuisine that reminds me of home."</p>
+                <p class="author">Sarah Mitchell, Regular Customer</p>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"As someone who's tried traditional dishes all over the country, I can confidently say TTQ.PRO KITCHEN serves the most authentic cow heels I've ever tasted. The flavors are rich and the texture is perfect every time."</p>
+                <p class="author">James Rodriguez, Food Enthusiast</p>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"The hardbody chicken is out of this world! Perfectly spiced and so tender. I've been coming here weekly since they opened and I'm always impressed with the consistency and quality."</p>
+                <p class="author">Emily Chen, Local Resident</p>
+            </div>
+
+            <div class="testimonial-card">
+                <p>"Monday's mogodu special is worth planning your week around. The flavors are complex and comforting, and the portion sizes are generous. TTQ.PRO KITCHEN has truly mastered traditional cooking."</p>
+                <p class="author">Michael Thompson, Food Blogger</p>
+            </div>
+        </div> -->
+    </div>
+
+    <!-- Contact Overlay -->
+    <div class="overlay" id="contactOverlay">
+        <div class="overlay-content">
+            <button class="close-btn" onclick="closeOverlay('contact')">×</button>
+            <h2>Step-in Our Kitchen</h2>
+            
+            <video controls width="100%" style="border-radius: 12px; margin-top: 30px;">
+    <source src="2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+            
+            <div class="contact-address">
+                <h3>Visit Us</h3>
+                <p>TTQ.PRO KITCHEN<br>
+                Fast Food District<br>
+                Johannesburg, South Africa<br>
+                <a href="tel:+27783578181">+27 78 357 8181</a> | <a href="mailto:info@ttqprokitchen.com">info@ttqprokitchen.com</a></p>
+            </div>
+            
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3578.81760869919!2d27.936801675416373!3d-26.235115277057577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e2!4m3!3m2!1d-26.2349209!2d27.9394027!4m5!1s0x1e9509bfd9f7ecdf%3A0x46d2ea3375913ac!2sFast%20food%20(Uber%20eats)!3m2!1d-26.2353076!2d27.9392496!5e0!3m2!1sen!2sza!4v1763246974431!5m2!1sen!2sza" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0; border-radius: 12px; opacity: 0.9;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="overlay-map">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Overlay -->
+    <div class="overlay" id="privacyOverlay">
+        <div class="overlay-content">
+            <button class="close-btn" onclick="closeOverlay('privacy')">×</button>
+            <h2>Privacy Policy</h2>
+            <p>At TTQ.PRO KITCHEN, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you interact with our website and services.</p>
+            
+            <p><strong>Information We Collect:</strong> We may collect personal information such as your name, email address, phone number, and any other details you provide when contacting us through our website forms or placing orders. We also collect non-personal information such as browser type, IP address, and pages visited for analytics purposes.</p>
+            
+            <p><strong>How We Use Your Information:</strong> The information we collect is used to respond to your inquiries, process your orders, improve our services, and send occasional updates about our specials and events (only if you've opted in). We never sell, trade, or rent your personal information to third parties.</p>
+            
+            <p><strong>Data Security:</strong> We implement industry-standard security measures to protect your personal information from unauthorized access, disclosure, or misuse. All form submissions and payment information are transmitted securely.</p>
+            
+            <p><strong>Cookies:</strong> Our website may use cookies to enhance user experience and track website analytics. You can disable cookies in your browser settings, though this may affect certain website functionalities.</p>
+            
+            <p><strong>Third-Party Services:</strong> We use trusted third-party services for payment processing and delivery, which may have their own privacy policies. We recommend reviewing their terms if you have concerns about data handling.</p>
+            
+            <p><strong>Your Rights:</strong> You have the right to access, correct, or delete any personal information we hold about you. To exercise these rights, please contact us through our contact form.</p>
+            
+            <p><strong>Changes to This Policy:</strong> We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date.</p>
+            
+            <p>If you have any questions about this Privacy Policy, please don't hesitate to contact us.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Opening Hours</h3>
+                <p><strong>Monday - Friday</strong></p>
+                <p>11:00 AM - 10:00 PM</p>
+                <p><strong>Saturday - Sunday</strong></p>
+                <p>10:00 AM - 09:00 PM</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact & follow Us</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/17dLnNTVjH/" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/27783578181" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#" onclick="openOverlay('about'); return false;">About Us</a></p>
+                <p><a href="#" onclick="openOverlay('contact'); return false;">Contact</a></p>
+                <p><a href="#" onclick="openOverlay('privacy'); return false;">Privacy Policy</a></p>
+                <p><a href="https://wa.me/27783578181?text=Hello%20I%20would%20like%20to%20order" target="_blank">Order Now</a></p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            TTQ.PRO ENTERPRISE. ALL RIGHTS RESERVED. | Design: TTQ.PRO KITCHEN
+        </div>
+    </footer>
+
+    <script>
+        // Menu data
+        const menuItems = [
+            { 
+                id: 1, 
+                title: "Ox-liver", 
+                price: "R55.00 (sit-in)", 
+                image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80",
+                description: "Tender ox liver cooked to perfection with our signature seasoning"
+            },
+            { 
+                id: 2, 
+                title: "Ox-liver", 
+                price: "R55.00 (take-away)", 
+                image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80",
+                description: "Our famous ox liver available for takeaway, perfect for enjoying at home"
+            },
+            { 
+                id: 3, 
+                title: "Cow heels", 
+                price: "R65.00 (sit-in)", 
+                image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                description: "Slow-cooked cow heels with rich, flavorful gravy"
+            },
+            { 
+                id: 4, 
+                title: "Cow heels", 
+                price: "R65.00 (take-away)", 
+                image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                description: "Take our delicious cow heels home to enjoy with family and friends"
+            },
+            { 
+                id: 5, 
+                title: "Hardbody Chicken", 
+                price: "R65.00 (sit-in)", 
+                image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                description: "Juicy, flavorful chicken with our special hardbody seasoning"
+            },
+            { 
+                id: 6, 
+                title: "Hardbody Chicken", 
+                price: "R65.00 (take-away)", 
+                image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                description: "Perfectly cooked hardbody chicken ready for takeaway"
+            },
+            { 
+                id: 7, 
+                title: "Mogodu (Mondays Only)", 
+                price: "R60.00 (sit-in)", 
+                image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D3D&auto=format&fit=crop&w=1974&q=80",
+                description: "Traditional mogodu stew, a Monday special that's worth the wait"
+            },
+            { 
+                id: 8, 
+                title: "Mogodu", 
+                price: "R60.00 (take-away)", 
+                image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D3D&auto=format&fit=crop&w=1974&q=80",
+                description: "Our famous Monday mogodu available for takeaway"
+            }
+        ];
+
+        // Initialize menu grid
+        const menuGrid = document.getElementById('menuGrid');
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.className = 'menu-item';
+            menuItem.innerHTML = `
+                <img src="${item.image}" alt="${item.title}" class="menu-image">
+                <div class="menu-details">
+                    <h3 class="menu-item-title">${item.title}</h3>
+                    <p class="menu-item-price">${item.price}</p>
+                    <p class="menu-item-description">${item.description}</p>
+                </div>
+            `;
+            menuGrid.appendChild(menuItem);
+        });
+
+        // Menu toggle functionality
+        const menuToggle = document.getElementById("menuToggle"),
+              mainNav = document.getElementById("mainNav");
+
+        function openOverlay(type) {
+            const overlay = document.getElementById(type + "Overlay");
+            overlay.classList.add("active");
+        }
+
+        function closeOverlay(type) {
+            document.getElementById(type + "Overlay").classList.remove("active");
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert("Thank you for your message! We will get back to you soon.");
+            event.target.reset();
+            closeOverlay("contact");
+        }
+
+        // Event Listeners
+        menuToggle.addEventListener("click", () => {
+            menuToggle.classList.toggle("active");
+            mainNav.classList.toggle("active");
+        });
+
+        document.querySelectorAll("nav a").forEach(link => {
+            link.addEventListener("click", () => {
+                if (window.innerWidth <= 768) {
+                    menuToggle.classList.remove("active");
+                    mainNav.classList.remove("active");
+                }
+            });
+        });
+
+        document.querySelectorAll(".overlay").forEach(overlay => {
+            overlay.addEventListener("click", (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove("active");
+                }
+            });
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                document.querySelectorAll(".overlay").forEach(overlay => {
+                    overlay.classList.remove("active");
+                });
+            }
+        });
+    </script>
+</body>
+</html>
